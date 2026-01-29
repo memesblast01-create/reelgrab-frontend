@@ -1,13 +1,12 @@
-
-import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { Results } from './components/Results';
-import { History } from './components/History';
-import { Footer } from './components/Footer';
-import { FAQ } from './components/FAQ';
-import { Features } from './components/Features';
+import React, { useState } from 'react';
+import { HashRouter, Routes, Route } from 'react-router-dom';
+import { Navbar } from './Navbar';
+import { Hero } from './Hero';
+import { Results } from './Results';
+import { History } from './History';
+import { Footer } from './Footer';
+import { FAQ } from './FAQ';
+import { Features } from './Features';
 import { VideoMetadata, DownloadHistoryItem } from './types';
 
 const App: React.FC = () => {
@@ -41,7 +40,7 @@ const LandingPage: React.FC = () => {
   const handleExtractionSuccess = (metadata: VideoMetadata) => {
     setCurrentResult(metadata);
     setLoading(false);
-    
+
     // Save to history
     const historyItem: DownloadHistoryItem = {
       id: Math.random().toString(36).substr(2, 9),
@@ -50,11 +49,14 @@ const LandingPage: React.FC = () => {
       platform: metadata.platform,
       timestamp: Date.now(),
       url: metadata.url,
-      isFavorite: false
+      isFavorite: false,
     };
-    
+
     const existingHistory = JSON.parse(localStorage.getItem('reelgrab_history') || '[]');
-    localStorage.setItem('reelgrab_history', JSON.stringify([historyItem, ...existingHistory].slice(0, 50)));
+    localStorage.setItem(
+      'reelgrab_history',
+      JSON.stringify([historyItem, ...existingHistory].slice(0, 50))
+    );
   };
 
   const handleExtractionError = (msg: string) => {
@@ -64,13 +66,13 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="space-y-20 pb-20">
-      <Hero 
+      <Hero
         onStart={handleExtractionStart}
         onSuccess={handleExtractionSuccess}
         onError={handleExtractionError}
         isLoading={loading}
       />
-      
+
       {loading && (
         <div className="max-w-4xl mx-auto px-4">
           <div className="bg-gray-900/50 rounded-2xl p-8 border border-gray-800 animate-pulse flex flex-col items-center justify-center space-y-4">
