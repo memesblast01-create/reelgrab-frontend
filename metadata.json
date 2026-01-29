@@ -1,0 +1,8 @@
+{
+  "name": "ReelGrab Pro",
+  "description": "A modern, professional social media video downloader that supports YouTube, TikTok, Instagram, and more without official APIs.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
